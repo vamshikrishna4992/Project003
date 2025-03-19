@@ -1,23 +1,8 @@
-<<<<<<< HEAD
-import mongoose from 'mongoose';
+import { createClient } from '@supabase/supabase-js'
 import dotenv from 'dotenv';
+dotenv.config();
 
-dotenv.config(); // Load environment variables
-
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('✅ MongoDB Connected Successfully');
-  } catch (err) {
-    console.error('❌ MongoDB Connection Failed:', err.message);
-    process.exit(1); // Stop the server if the connection fails
-  }
-};
-
-export default connectDB;
-=======
-import express from 'express';
->>>>>>> 94002610ea404ef62fc2411276f4da56a1e5c275
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
+export default supabase;

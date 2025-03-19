@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './config/db.js' // Import MongoDB connection
+import supabase from './config/db.js' // Import Supabase connection
 import userRoutes from './routes/userRoutes.js'; // Import routes
 
 dotenv.config(); // Load environment variables
@@ -12,8 +12,8 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // To parse JSON request body
 
-// Connect to MongoDB
-connectDB();
+// Connect to supabase
+// supabase();
 
 // Routes
 app.use('/api/users', userRoutes);
