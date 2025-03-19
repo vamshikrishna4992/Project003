@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -17,3 +18,6 @@ const connectDB = async () => {
 };
 
 export default connectDB;
+=======
+import express from 'express';
+>>>>>>> 94002610ea404ef62fc2411276f4da56a1e5c275
