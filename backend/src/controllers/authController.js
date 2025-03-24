@@ -3,6 +3,7 @@ import User from '../models/User.js';
 import { sendEmail } from '../utils/email.js';
 import { createError } from '../utils/error.js';
 import crypto from 'crypto';
+import { sendOTP } from '../services/twilioService.js';
 
 // Generate JWT Token
 const generateToken = (id) => {
@@ -283,6 +284,61 @@ export const getMe = async (req, res, next) => {
       data: {
         user
       }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Send OTP for phone verification
+// @route   POST /api/auth/send-otp
+// @access  Public
+export const sendPhoneOTP = async (req, res, next) => {
+  try {
+    const { phoneNumber } = req.body;
+
+    if (!phoneNumber) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Phone number is required'
+      });
+    }
+
+    // Generate and send OTP
+    const otp = await sendOTP(phoneNumber);
+
+    // Store OTP in database or cache with expiration
+    // You might want to use Redis or similar for this
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'OTP sent successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Verify phone OTP
+// @route   POST /api/auth/verify-otp
+// @access  Public
+export const verifyPhoneOTP = async (req, res, next) => {
+  try {
+    const { phoneNumber, otp } = req.body;
+
+    if (!phoneNumber || !otp) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Phone number and OTP are required'
+      });
+    }
+
+    // Verify OTP from database or cache
+    // Add your verification logic here
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Phone number verified successfully'
     });
   } catch (error) {
     next(error);
